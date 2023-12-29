@@ -1,36 +1,58 @@
-
-
-
-
-
-//Creamos una funcion para nuestro juego (le pasamos dos parametros)
-function jugarAdivinanza(palabraSecreta, intentosMaximos) {
-  let intentos = intentosMaximos; // emparejamos intentos con intentosMaximos
-
-  //Mediante un alert, le damos la bienvenida a nuestro usuario
-  alert("¡Bienvenido al juego de adivinanza! Adivina la palabra secreta.");
-
-  // Usamos el clico while para estructurar nuestros intentos/juego
-  while (intentos > 0) { 
-    const respuesta = prompt("Ingresa una palabra:").toLowerCase();//Le pedimos al usuario que ingrese un palabra mediante prompt y convertimos el texto a minusculas.
-
-    if (respuesta === palabraSecreta) { //ultilizamos un condicional, en este caso if/else
-      alert("¡Respuesta correcta! Has ganado el juego.");
-      return; //Si la respuesta es acertada antes de terminar los intentos, terminamos el clico con nuestro return
-    } else {  // De lo conrtrario restamos los intentos y mostramos mediante un alert info de la cantidad de intentos disponibles a nuestro usuario.
-      intentos--;
-      alert(`Respuesta incorrecta. Te quedan ${intentos} intentos.`);
-    }
-  }
-
-  if (intentos === 0) { // una vez fuera de nuestro ciclo(cuando el usuario gasto sus 3 oportunidades damos por terminado el juego.)
-    alert(`Se te han agotado los intentos. La palabra secreta era "${palabraSecreta}".`);
+class Producto {
+  constructor(nombre, precio, proveedor) {
+    this.nombre = nombre;
+    this.precio = precio;
+    this.proveedor = proveedor;
   }
 }
 
-// Llamamos a nuestra funcion, declarando su valores (javascript(como palabra clave) y 3 (como numero de intentos)).
-jugarAdivinanza("javascript", 3);
+const listaProductos = [];
+let opcion = 0;
 
+while (opcion !== -1) {
+  opcion = Number(prompt("Selecciona una opción: 1-Agregar producto // 2-Mostrar productos // 3-Calcular total // 4-Salir: "));
+  switch (opcion) {
+    case 1:
+      agregarProducto();
+      break;
+    case 2:
+      mostrarProductos();
+      break;
+    case 3:
+      calcularTotal();
+      break;
+    case 4:
+      opcion = -1;
+      break;
+    default:
+      alert("Opción no válida. Ingresa un número válido.");
+  }
+}
 
+function agregarProducto() {
+  let nombre = prompt("Ingresa el nombre del producto: ");
+  let precio = Number(prompt("Ingresa el precio del producto: "));
+  let proveedor = prompt("Ingresa el nombre del proveedor: ");
 
+  const producto = new Producto(nombre, precio, proveedor);
+  listaProductos.push(producto);
+}
 
+function mostrarProductos() {
+  let mensaje = "Lista de productos:\n";
+  for (let i = 0; i < listaProductos.length; i++) {
+    mensaje += `Producto: ${listaProductos[i].nombre}, Precio: $${listaProductos[i].precio}, Proveedor: ${listaProductos[i].proveedor}\n`;
+  }
+  alert(mensaje);
+}
+
+function calcularTotal() {
+  let total = 0;
+  let mensaje = "Lista de productos:\n";
+  for (let i = 0; i < listaProductos.length; i++) {
+    mensaje += `Producto: ${listaProductos[i].nombre}, Precio: $${listaProductos[i].precio}\n`;
+    total += listaProductos[i].precio;
+  }
+  mensaje += `\nTotal: $${total}`;
+  alert(mensaje);
+}
